@@ -1,6 +1,4 @@
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 public class AutomataPila {
 
@@ -10,6 +8,8 @@ public class AutomataPila {
     String estadoInicial;
     String[] confInitPila;
     String[][][] tablasDeTransiciones;
+    List<String> transiciones = new ArrayList<>();
+    Transicion[] transicionesPasos;
 
     Stack<String> pila;
 
@@ -58,6 +58,7 @@ public class AutomataPila {
             consola.titulo("Creación de tabla de transiciones para el estado " + estados[i]);
             tablasDeTransiciones[i] = crearTabla();
         }
+        crearTransiciones();
     }
 
     private String[][] crearTabla() {
@@ -68,6 +69,9 @@ public class AutomataPila {
             for (int j = 0; j < simbolosEntrada.length; j++) {
                 consola.parrafo("Con símbolo de entrada " + simbolosEntrada[j] + ": ");
                 nuevaTabla[i][j] = s.nextLine();
+                if (!nuevaTabla[i][j].equals("R") && !nuevaTabla[i][j].equals("A") && !transiciones.contains(nuevaTabla[i][j])) {
+                    transiciones.add(nuevaTabla[i][j]);
+                }
             }
         }
         return nuevaTabla;
@@ -79,10 +83,14 @@ public class AutomataPila {
         consola.titulo("Estados: " + Arrays.toString(estados));
         consola.titulo("Estado inicial: " + estadoInicial);
         consola.titulo("Configuración inicial de la pila " + Arrays.toString(confInitPila));
-        consola.titulo("Transiciones:");
+        consola.titulo("Tablas de transiciones:");
         for (int i = 0; i < tablasDeTransiciones.length; i++) {
             consola.subtitulo(estados[i]);
             consola.parrafo(tablaToString(i) + "\n");
+        }
+        consola.titulo("Transiciones: ");
+        for (int i = 0; i < transicionesPasos.length; i++) {
+            consola.parrafo(transiciones.get(i) + ": " + transicionesPasos[i].toString()+"\n");
         }
     }
 
@@ -90,5 +98,29 @@ public class AutomataPila {
         return Arrays.deepToString(tablasDeTransiciones[i]);
     }
 
+    public void crearTransiciones() {
+        transicionesPasos = new Transicion[transiciones.size()];
+        for (int i = 0; i < transicionesPasos.length; i++) {
+            consola.titulo("Cración de la transición "+transiciones.get(i));
+            boolean out = false;
+            int opPila = 0;
+            int opEstado = 0;
+            int opEntrada = 0;
+            Scanner s = new Scanner(System.in);
+            consola.parrafo("Digite 1 si su operación tiene alguna impresión: ");
+            String x = s.nextLine();
+            if (x.equals("1")) {
+                out = true;
+            }
+            consola.parrafo("Operaciones en la pila: 0 ninguna, 1 apilar, 2 desapilar, 3 replace: ");
+            opPila = s.nextInt();
+            consola.parrafo("Operación de estado: 0 permanece, 1 cambia de estado: ");
+            opEstado = s.nextInt();
+            consola.parrafo("Operaciones de entrada: 0 retenga, 1 avance: ");
+            opEntrada = s.nextInt();
+            Transicion t = new Transicion(out, opPila, opEstado, opEntrada);
+            transicionesPasos[i] = t;
+        }
+    }
 
 }
