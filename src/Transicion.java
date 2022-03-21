@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -52,27 +53,27 @@ public class Transicion {
     }
 
     private String pedirOut() {
-        Scanner s = new Scanner(System.in);
-        consola.parrafo("Digite la salida (operación out) que tendrá la transicion: ");
-        return (s.nextLine());
+        //Scanner s = new Scanner(System.in);
+        //consola.parrafo("Digite la salida (operación out) que tendrá la transicion: ");
+        return (JOptionPane.showInputDialog("Digite la salida (operación out) que tendrá la transicion: "));
     }
 
     private String pedirSimboloApilar() {
-        Scanner s = new Scanner(System.in);
-        consola.parrafo("Digite el símbolo a apilar en la transicion: ");
-        return s.nextLine();
+        //Scanner s = new Scanner(System.in);
+        //consola.parrafo("Digite el símbolo a apilar en la transicion: ");
+        return (JOptionPane.showInputDialog("Digite el símbolo a apilar en la transicion: "));
     }
 
     private String[] pedirSimboloReplace() {
-        Scanner s = new Scanner(System.in);
-        consola.parrafo("Digite la cadena a reemplazar en la transicion: ");
-        return s.nextLine().split(" ");
+        //Scanner s = new Scanner(System.in);
+        //consola.parrafo("Digite la cadena a reemplazar en la transicion: ");
+        return JOptionPane.showInputDialog("Digite la cadena a reemplazar en la transicion: ").split(" ");
     }
 
     private String pedirEstadoSiguiente() {
-        Scanner s = new Scanner(System.in);
-        consola.parrafo("Digite el estado al cual avanzar con la transicion: ");
-        return (s.nextLine());
+        //Scanner s = new Scanner(System.in);
+        //consola.parrafo("Digite el estado al cual avanzar con la transicion: ");
+        return JOptionPane.showInputDialog("Digite el estado al cual avanzar con la transicion: ");
     }
 
     @Override

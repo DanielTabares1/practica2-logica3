@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.*;
 
 public class AutomataPila {
@@ -55,7 +56,8 @@ public class AutomataPila {
 
     public void crearTablas() {
         for (int i = 0; i < estados.length; i++) {
-            consola.titulo("Creación de tabla de transiciones para el estado " + estados[i]);
+            JOptionPane.showMessageDialog(null, "Creación de tabla de transiciones para el estado " + estados[i]);
+            //consola.titulo("Creación de tabla de transiciones para el estado " + estados[i]);
             tablasDeTransiciones[i] = crearTabla();
         }
         crearTransiciones();
@@ -63,12 +65,14 @@ public class AutomataPila {
 
     private String[][] crearTabla() {
         String[][] nuevaTabla = new String[simbolosEnPila.length][simbolosEntrada.length];
-        Scanner s = new Scanner(System.in);
+        //Scanner s = new Scanner(System.in);
         for (int i = 0; i < simbolosEnPila.length; i++) {
-            consola.subtitulo("Para el símbolo en la pila " + simbolosEnPila[i] + ": ");
+            //consola.subtitulo("Para el símbolo en la pila " + simbolosEnPila[i] + ": ");
             for (int j = 0; j < simbolosEntrada.length; j++) {
-                consola.parrafo("Con símbolo de entrada " + simbolosEntrada[j] + ": ");
-                nuevaTabla[i][j] = s.nextLine();
+                //consola.parrafo("Con símbolo de entrada " + simbolosEntrada[j] + ": ");
+                nuevaTabla[i][j] = JOptionPane.showInputDialog("" +
+                        "Para el símbolo en la pila " + simbolosEnPila[i] + ": \n" +
+                        "Con símbolo de entrada " + simbolosEntrada[j] + ": ");
                 if (!nuevaTabla[i][j].equals("R") && !nuevaTabla[i][j].equals("A") && !transiciones.contains(nuevaTabla[i][j])) {
                     transiciones.add(nuevaTabla[i][j]);
                 }
@@ -90,7 +94,7 @@ public class AutomataPila {
         }
         consola.titulo("Transiciones: ");
         for (int i = 0; i < transicionesPasos.length; i++) {
-            consola.parrafo(transiciones.get(i) + ": " + transicionesPasos[i].toString()+"\n");
+            consola.parrafo(transiciones.get(i) + ": " + transicionesPasos[i].toString() + "\n");
         }
     }
 
@@ -101,26 +105,29 @@ public class AutomataPila {
     public void crearTransiciones() {
         transicionesPasos = new Transicion[transiciones.size()];
         for (int i = 0; i < transicionesPasos.length; i++) {
-            consola.titulo("Cración de la transición "+transiciones.get(i));
+            consola.titulo("Cración de la transición " + transiciones.get(i));
             boolean out = false;
             int opPila = 0;
             int opEstado = 0;
             int opEntrada = 0;
-            Scanner s = new Scanner(System.in);
-            consola.parrafo("Digite 1 si su operación tiene alguna impresión: ");
-            String x = s.nextLine();
+            //Scanner s = new Scanner(System.in);
+            //consola.parrafo("Digite 1 si su operación tiene alguna impresión: ");
+            String x = JOptionPane.showInputDialog("Cración de la transición " + transiciones.get(i) + "\n" +
+                    "Digite 1 si su operación tiene alguna impresión: ");
             if (x.equals("1")) {
                 out = true;
             }
-            consola.parrafo("Operaciones en la pila: 0 ninguna, 1 apilar, 2 desapilar, 3 replace: ");
-            opPila = s.nextInt();
-            consola.parrafo("Operación de estado: 0 permanece, 1 cambia de estado: ");
-            opEstado = s.nextInt();
-            consola.parrafo("Operaciones de entrada: 0 retenga, 1 avance: ");
-            opEntrada = s.nextInt();
+            //consola.parrafo("Operaciones en la pila: 0 ninguna, 1 apilar, 2 desapilar, 3 replace: ");
+            opPila = Integer.parseInt(JOptionPane.showInputDialog("Cración de la transición " + transiciones.get(i) + "\n" +
+                    "Operaciones en la pila: \n0. ninguna\n1. apilar\n2. desapilar\n3. replace: "));
+            //consola.parrafo("Operación de estado: 0 permanece, 1 cambia de estado: ");
+            opEstado = Integer.parseInt(JOptionPane.showInputDialog("Cración de la transición " + transiciones.get(i) + "\n" +
+                    "Operación de estado: \n0. permanece\n1. cambia de estado: "));
+            //consola.parrafo("Operaciones de entrada: 0 retenga, 1 avance: ");
+            opEntrada = Integer.parseInt(JOptionPane.showInputDialog("Cración de la transición " + transiciones.get(i) + "\n" +
+                    "Operaciones de entrada: \n0. retenga\n1. avance: "));
             Transicion t = new Transicion(out, opPila, opEstado, opEntrada);
             transicionesPasos[i] = t;
         }
     }
-
 }
